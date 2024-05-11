@@ -5,10 +5,10 @@ sdk: org.freedesktop.Sdk
 runtime-version: '23.08'
 build-extension: true
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.llvm15
+  - org.freedesktop.Sdk.Extension.llvm17
 build-options:
-  prepend-path: /usr/lib/sdk/llvm15/bin
-  prepend-ld-library-path: /usr/lib/sdk/llvm15/lib
+  prepend-path: /usr/lib/sdk/llvm17/bin
+  prepend-ld-library-path: /usr/lib/sdk/llvm17/lib
 
 
 x-arch-build-options:
@@ -25,7 +25,7 @@ x-arch-build-options:
   # org.freedesktop.Sdk.Compat.arm is deprecated, so only build for aarch64.
   aarch64: &aarch64-build-options
     prefix: /usr/lib/aarch64-linux-gnu/GL/asahi
-    prepend-path: /usr/lib/x86_64-linux-gnu/GL/asahi/bin
+    prepend-path: /usr/lib/aarch64-linux-gnu/GL/asahi/bin
     prepend-pkg-config-path: /usr/lib/aarch64-linux-gnu/GL/asahi/lib/pkgconfig:/usr/lib/aarch64-linux-gnu/GL/asahi/share/pkgconfig
     libdir: /usr/lib/aarch64-linux-gnu/GL/asahi/lib
     prepend-ld-library-path: /usr/lib/aarch64-linux-gnu/GL/asahi/lib
@@ -96,8 +96,8 @@ modules:
       - '-DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR=/usr/lib/aarch64-linux-gnu/GL/asahi'
     sources:
       - type: archive
-        url: https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v15.0.0.tar.gz
-        sha256: b1bebd77f72988758c00852e78c2ddc545815a612169a0cb377d021e2f846d88
+        url: https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v17.0.0.tar.gz
+        sha256: eba381e1dd99b4ff6c672a28f52755d1adf2d810a97b51e6074ad4fa67937fb2
 
   - name: libclc
     build-options:
@@ -111,14 +111,14 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.6/libclc-16.0.6.src.tar.xz
-        sha256: 61952af79c555d50bc88cb6f134d9abe9278f65dd34c2bc945cc3d324c2af224
+        url: https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/libclc-17.0.6.src.tar.xz
+        sha256: 122f641d94d5dfbb3c37534f2b76612fa59d15c36c2a4917369a85eaaca32148
 
   # We might need to make this do some arch-specific stuff later for i386 builds, but as of the time of writing we only do 64-bit builds so we'll be fine.
   - name: llvm
     buildsystem: simple
     build-commands:
-      - cp /usr/lib/sdk/llvm15/lib/libLLVM-15.so /usr/lib/$(uname -m)-linux-gnu/GL/asahi/lib
+      - cp /usr/lib/sdk/llvm17/lib/libLLVM-17.so /usr/lib/$(uname -m)-linux-gnu/GL/asahi/lib
 
   - name: mesa
     build-options:
@@ -162,8 +162,8 @@ modules:
 
     sources:
       - type: archive
-        url: https://gitlab.freedesktop.org/asahi/mesa/-/archive/asahi-20240123/mesa-asahi-20240123.tar.bz2
-        sha256: 9113f76e6c17fb13ccda5702dca14e1b641d15900e32439ba3cd6409d28356e9
+        url: https://gitlab.freedesktop.org/asahi/mesa/-/archive/asahi-20240228/mesa-asahi-20240228.tar.bz2
+        sha256: 076bb4b78fa0645be6199ecdb4a0cc6c15c2a52514b73942f0da670857628974
         x-checker-data:
           type: html
           url: https://github.com/AsahiLinux/PKGBUILDs/raw/main/mesa-asahi-edge/PKGBUILD
